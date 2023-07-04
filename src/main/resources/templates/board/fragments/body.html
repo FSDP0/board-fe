@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" 
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<body th:fragment="main-body">
+		<div class="fixed-navbar">
+			<div class="pull-left">
+				<h1 class="page-title">공지 게시판</h1>
+			</div>
+			
+			<!-- [ Auth _ Logout ] -->
+			<!-- <div class="pull-right">
+				<a href="/auth/logout">
+					<span class="text-left">로그아웃</span>
+				</a>
+			</div>
+			<div class="pull-right">
+				<a href="/security/login">
+					<span class="text-left">로그인</span>
+				</a>
+			</div> -->
+		</div>
+		<!-- /.fixed-navbar -->
+
+		<div id="wrapper">
+			<div class="main-content">
+				<div class="row row-inline-block small-spacing">
+					<div class="col-xs-12">
+						<div class="box-content">
+							<div class="clearfix">
+								<h4 class="box-title pull-left"></h4>
+								<!-- /.box-title -->
+	
+								<!-- [ Layout Fragment _ search 영역 ]] -->
+								<th:block layout:fragment="search"></th:block>
+							</div>
+							<!-- //.clearfix -->
+	
+							<!-- [ Layout Fragment _ content 영역 ] -->
+							<th:block layout:fragment="content"></th:block>
+
+							<!-- [ Layout Fragment _ paging 영역 ] -->
+							<th:block layout:fragment="paging"></th:block>
+						</div>
+						<!-- /.box-content -->
+						
+						<!-- [ Layout Fragment _ add-content 영역 ] -->
+						<th:block layout:fragment="add-content"></th:block>
+						<th:block layout:fragment="sample"></th:block>
+					</div>
+					<!-- /.col-xs-12 -->
+				</div>
+				
+				<footer class="footer text-center" >
+					<ul class="list-inline">
+						<li>2023 © osckorea.</li>
+					</ul>
+				</footer>
+			</div>
+			<!-- /.main-content -->
+		</div>
+		<!-- /#wrapper -->
+
+		
+	</body>
+</html>

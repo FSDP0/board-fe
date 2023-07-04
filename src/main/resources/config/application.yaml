@@ -1,0 +1,23 @@
+---
+# Common settings for Spring Boot
+
+# Spring Boot options
+spring:
+    # Watching Static Resource Change
+    devtools:
+        livereload:
+            enabled: false
+    # Default Profile is local
+    # Profiles : local | dev | prod
+    profiles:
+        active: local
+    # Spring output logs colorize
+    output:
+        ansi:
+            enabled: always
+    # Thymeleaf (Server Side Template Engine) Configuration
+    thymeleaf:
+        prefix: classpath:/templates/   # Thymeleaf View Template Path Config
+        suffix: .html                   # Thymeleaf View Template Extension Config
+        cache: false                    # Don't remain Thymeleaf cache
+        check-template-location: true   # templates dir file exist check
