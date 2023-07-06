@@ -8,16 +8,19 @@ spring:
         livereload:
             enabled: false
     # Default Profile is local
-    # Profiles : local | dev | prod
+    # Profiles : local
     profiles:
         active: local
-    # Spring output logs colorize
+    # * Spring output logs colorize
     output:
         ansi:
             enabled: always
-    # Thymeleaf (Server Side Template Engine) Configuration
+    # ! Thymeleaf (Server Side Template Engine) Configuration
     thymeleaf:
-        prefix: classpath:/templates/   # Thymeleaf View Template Path Config
-        suffix: .html                   # Thymeleaf View Template Extension Config
-        cache: false                    # Don't remain Thymeleaf cache
-        check-template-location: true   # templates dir file exist check
+        prefix: classpath:/templates/   # ! Config for using ViewResolver
+        suffix: .html                   # ! Thymeleaf view template file extension config, Default : *.html
+        cache: false                    # ! Don't remain thymeleaf template cache
+        check-template-location: true   # ! Template directory files exist check, Default : true
+        reactive:
+            max-chunk-size: 8192
+          
