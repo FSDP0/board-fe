@@ -1,12 +1,12 @@
 # Debug level : DEBUG
-logging:
-    level:
-        org:
-            springframework: DEBUG
+# logging:
+#     level:
+#         org:
+#             springframework: DEBUG
 
 server:
     port: 9000
 
 api:
     # Local Environment : http://localhost:<Port Num.>/<Context Paths>
-    url: http://localhost:8000/boards
+    url: http://localhost:8000
