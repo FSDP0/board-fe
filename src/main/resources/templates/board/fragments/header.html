@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko"
-		xmlns:th="http://www.thymeleaf.org"
-		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<head th:fragment="main-head">
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head th:fragment="main-head">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<!-- [ Layout Fragment _ title ] -->
+        <!-- [ Layout Fragment _ title ] -->
 		<th:block layout:fragment="title"></th:block>
 
 		<!-- [ Stylesheets & Plugin (3) ] -->
-		<link rel="stylesheet" th:href="@{/css/style.css}" />
-		<link rel="stylesheet" th:href="@{/css/simplePagination.css}" />
-		<link rel="stylesheet" th:href="@{/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css}" />
+		<link th:href="@{/css/style.css}" rel="stylesheet"/>
+		<link th:href="@{/css/simplePagination.css}" rel="stylesheet"/>
+		<link th:href="@{/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css}" rel="stylesheet"/>
 
 		<!-- [ Layout Fragment _ add-css ] -->
 		<th:block layout:fragment="add-css"></th:block>
@@ -35,5 +36,5 @@
 
 		<!-- [ Layout Fragment _ script ] -->
 		<th:block layout:fragment="script"></th:block>
-	</head>
+    </head>
 </html>

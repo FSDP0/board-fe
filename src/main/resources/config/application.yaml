@@ -6,7 +6,7 @@ spring:
     # Watching Static Resource Change
     devtools:
         livereload:
-            enabled: false
+            enabled: true
     # Default Profile is local
     # Profiles : local
     profiles:
@@ -20,7 +20,8 @@ spring:
         prefix: classpath:/templates/   # ! Config for using ViewResolver
         suffix: .html                   # ! Thymeleaf view template file extension config, Default : *.html
         cache: false                    # ! Don't remain thymeleaf template cache
+        check-template: true
         check-template-location: true   # ! Template directory files exist check, Default : true
+        encoding: UTF-8
         reactive:
             max-chunk-size: 8192
-          

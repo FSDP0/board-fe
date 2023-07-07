@@ -1,6 +1,7 @@
 package com.boardapp.boardfe.board.model;
 
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,11 @@ public class Board {
     private String contents;
     private String writeName;
     private String modifyName;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date writeDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date modifyDate;
 
     @Builder
