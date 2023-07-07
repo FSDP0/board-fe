@@ -1,6 +1,5 @@
 package com.boardapp.boardfe.board.controller;
 
-import java.util.List;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +15,11 @@ import com.boardapp.boardfe.board.model.BoardSave;
 import com.boardapp.boardfe.board.service.BoardService;
 import com.boardapp.boardfe.common.util.PagerInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Controller
 @RequestMapping("boards")
 @RequiredArgsConstructor
@@ -29,10 +30,8 @@ public class BoardViewController {
     @GetMapping("/list")
     public Mono<String> list(PagerInfo pagerInfo, Model model) {
         // Flux<Board> boardFlux = this.boardService.getAllBoards();
-        // List<Board> boardList = this.boardService.getAllBoards().collectList().block();
 
         IReactiveDataDriverContextVariable reactiveDataDrivenMode = new ReactiveDataDriverContextVariable(this.boardService.getAllBoards(),1);
-
 
         model.addAttribute("boardList", reactiveDataDrivenMode);
         model.addAttribute("pagerInfo", pagerInfo);
@@ -63,9 +62,9 @@ public class BoardViewController {
         return Mono.just("board/form");
     }
 
-    @PostMapping(value = "/writeSubmit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/writeSubmit", produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public Mono<String> writeSubmit(Mono<BoardSave> boardMono, PagerInfo pagerInfo, Model model) {
-        this.boardService.saveBoard(boardMono);
+        this.boardService.saveBoard(boardMono).subscribe();
 
         Flux<Board> boardFlux = this.boardService.getAllBoards();
 
@@ -78,7 +77,7 @@ public class BoardViewController {
 
     @PostMapping(value = "/modifySubmit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public Mono<String> modifySubmit(Mono<BoardEdit> boardMono, PagerInfo pagerInfo, Model model) {
-        this.boardService.updateBoard(Long.valueOf(1),boardMono);
+        this.boardService.updateBoard(Long.valueOf(1),boardMono).subscribe();
 
         Flux<Board> boardFlux = this.boardService.getAllBoards();
 
@@ -91,7 +90,9 @@ public class BoardViewController {
 
     @GetMapping("/delete")
     public Mono<String> delete(@RequestParam Long num,PagerInfo pagerInfo,Model model){
-        this.boardService.deleteBoard(num);
+        log.warn(num+"");;
+
+        this.boardService.deleteBoard(num).subscribe();
 
         Flux<Board> boardFlux = this.boardService.getAllBoards();
 

@@ -5,7 +5,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.EnableWebFlux;
-import org.springframework.web.reactive.config.ResourceHandlerRegistration;
 import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.ViewResolverRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
@@ -14,6 +13,7 @@ import org.thymeleaf.spring6.SpringWebFluxTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.reactive.ThymeleafReactiveViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 
 @Configuration
 @EnableWebFlux
@@ -52,6 +52,10 @@ class WebConfig implements ApplicationContextAware, WebFluxConfigurer {
     @Bean
     public ISpringWebFluxTemplateEngine thymeleafTemplateEngine() {
         final SpringWebFluxTemplateEngine templateEngine = new SpringWebFluxTemplateEngine();
+        
+        // ! This line must be required to use layout dialect [layout:decorate not working]
+        templateEngine.addDialect(new LayoutDialect());
+        // !
         
         templateEngine.setTemplateResolver(thymeleafTemplateResolver());
         
