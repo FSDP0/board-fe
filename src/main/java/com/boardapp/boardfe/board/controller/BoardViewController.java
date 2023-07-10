@@ -29,11 +29,11 @@ public class BoardViewController {
 
     @GetMapping("/list")
     public Mono<String> list(PagerInfo pagerInfo, Model model) {
-        // Flux<Board> boardFlux = this.boardService.getAllBoards();
+        Flux<Board> boardFlux = this.boardService.getAllBoards();
 
-        IReactiveDataDriverContextVariable reactiveDataDrivenMode = new ReactiveDataDriverContextVariable(this.boardService.getAllBoards(),1);
+        // IReactiveDataDriverContextVariable reactiveDataDrivenMode = new ReactiveDataDriverContextVariable(this.boardService.getAllBoards(),1);
 
-        model.addAttribute("boardList", reactiveDataDrivenMode);
+        model.addAttribute("boardList", boardFlux);
         model.addAttribute("pagerInfo", pagerInfo);
 
         return Mono.just("board/list");
