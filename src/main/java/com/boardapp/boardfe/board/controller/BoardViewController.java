@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.spring6.context.webflux.IReactiveDataDriverContextVariable;
-import org.thymeleaf.spring6.context.webflux.ReactiveDataDriverContextVariable;
 import com.boardapp.boardfe.board.model.Board;
 import com.boardapp.boardfe.board.model.BoardEdit;
 import com.boardapp.boardfe.board.model.BoardSave;
@@ -31,7 +29,6 @@ public class BoardViewController {
     public Mono<String> list(PagerInfo pagerInfo, Model model) {
         Flux<Board> boardFlux = this.boardService.getAllBoards();
 
-        // IReactiveDataDriverContextVariable reactiveDataDrivenMode = new ReactiveDataDriverContextVariable(this.boardService.getAllBoards(),1);
 
         model.addAttribute("boardList", boardFlux);
         model.addAttribute("pagerInfo", pagerInfo);
