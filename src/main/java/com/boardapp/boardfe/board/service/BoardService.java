@@ -4,6 +4,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 import com.boardapp.boardfe.board.model.Board;
 import com.boardapp.boardfe.board.model.BoardEdit;
@@ -39,27 +40,12 @@ public class BoardService {
                                 .bodyToMono(Board.class);
     }
 
-    public Mono<Void> saveBoard(Mono<BoardSave> boardMono) {
-        // MultiValueMap<String,String> formData = new LinkedMultiValueMap<>();
-
-        // boardMono.map(board -> Mono.fromRunnable(
-        //     () -> {
-        //         formData.add("title", board.getTitle());
-        //         formData.add("contents",board.getContents());
-        //         formData.add("writeName",board.getWriteName());
-        //     }
-        // ));
-
-        return this.webClient.getWebClient()
-                                .post()
-                                .uri("/boards")
-                                // .contentType(MediaType.APPLICATION_JSON)
-                                .body(boardMono, BoardSave.class)
-                                // .body(BodyInserters.fromFormData("title", "test")
-                                //                     .with("contents", "test con")
-                                //                     .with("writeName", "tester"))
-                                .retrieve()
-                                .bodyToMono(Void.class);
+    public Mono<Void> saveBoard(Mono<Board> boardMono) {
+        return this.webClient.getWebClient().post()
+                                            .uri("/boards")
+                                            .body(boardMono, Board.class)
+                                            .retrieve()
+                                            .bodyToMono(Void.class);
     }
 
     public Mono<Void> updateBoard(Long id,Mono<BoardEdit> boardMono) {

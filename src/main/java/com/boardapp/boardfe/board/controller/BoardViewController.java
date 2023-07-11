@@ -3,8 +3,11 @@ package com.boardapp.boardfe.board.controller;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.boardapp.boardfe.board.model.Board;
@@ -29,7 +32,6 @@ public class BoardViewController {
     public Mono<String> list(PagerInfo pagerInfo, Model model) {
         Flux<Board> boardFlux = this.boardService.getAllBoards();
 
-
         model.addAttribute("boardList", boardFlux);
         model.addAttribute("pagerInfo", pagerInfo);
 
@@ -50,8 +52,8 @@ public class BoardViewController {
         return Mono.just("board/form");
     }
 
-    @GetMapping("/modifyForm")
-    public Mono<String> edit(@RequestParam Long num,Model model){
+    @GetMapping(value = "/modifyForm")
+    public Mono<String> edit(@RequestParam Long num, Model model){
         Mono<Board> boardMono = this.boardService.getByBoardId(num);
 
         model.addAttribute("board", boardMono);
@@ -59,9 +61,10 @@ public class BoardViewController {
         return Mono.just("board/form");
     }
 
-    @PostMapping(value = "/writeSubmit", produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public Mono<String> writeSubmit(Mono<BoardSave> boardMono, PagerInfo pagerInfo, Model model) {
-        this.boardService.saveBoard(boardMono).subscribe();
+    // ! Receive form-data 
+    @PostMapping(value = "/writeSubmit",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Mono<String> writeSubmit(Mono<Board> board,PagerInfo pagerInfo, Model model) {
+        this.boardService.saveBoard(board).subscribe();
 
         Flux<Board> boardFlux = this.boardService.getAllBoards();
 
@@ -72,7 +75,7 @@ public class BoardViewController {
         return Mono.just("redirect:/boards/list");
     }
 
-    @PostMapping(value = "/modifySubmit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/modifySubmit")
     public Mono<String> modifySubmit(Mono<BoardEdit> boardMono, PagerInfo pagerInfo, Model model) {
         this.boardService.updateBoard(Long.valueOf(1),boardMono).subscribe();
 
@@ -87,7 +90,7 @@ public class BoardViewController {
 
     @GetMapping("/delete")
     public Mono<String> delete(@RequestParam Long num,PagerInfo pagerInfo,Model model){
-        log.warn(num+"");;
+        log.warn(num+"");
 
         this.boardService.deleteBoard(num).subscribe();
 
