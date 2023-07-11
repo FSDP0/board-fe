@@ -3,16 +3,11 @@ package com.boardapp.boardfe.board.controller;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.boardapp.boardfe.board.model.Board;
-import com.boardapp.boardfe.board.model.BoardEdit;
-import com.boardapp.boardfe.board.model.BoardSave;
 import com.boardapp.boardfe.board.service.BoardService;
 import com.boardapp.boardfe.common.util.PagerInfo;
 import lombok.RequiredArgsConstructor;
@@ -61,10 +56,11 @@ public class BoardViewController {
         return Mono.just("board/form");
     }
 
-    // ! Receive form-data 
+    // ! Form Data Request Header, Content-Type : x-www-form-urlencoded
+    // ! Object argument type name must match with form data object name
     @PostMapping(value = "/writeSubmit",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public Mono<String> writeSubmit(Mono<Board> board,PagerInfo pagerInfo, Model model) {
-        this.boardService.saveBoard(board).subscribe();
+        this.boardService.saveBoard(board).subscribe(); // * Execute subscribe for run save method first.
 
         Flux<Board> boardFlux = this.boardService.getAllBoards();
 
@@ -75,9 +71,18 @@ public class BoardViewController {
         return Mono.just("redirect:/boards/list");
     }
 
-    @PostMapping(value = "/modifySubmit")
-    public Mono<String> modifySubmit(Mono<BoardEdit> boardMono, PagerInfo pagerInfo, Model model) {
-        this.boardService.updateBoard(Long.valueOf(1),boardMono).subscribe();
+    // ! Form Data Request Header, Content-Type : x-www-form-urlencoded
+    // ! Object argument type name must match with form data object name
+    @PostMapping(value = "/modifySubmit", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Mono<String> modifySubmit(Mono<Board> boardMono, PagerInfo pagerInfo, Model model) {
+        boardMono.flatMap(board -> Mono.fromRunnable(() -> {
+            log.debug("Received Board Id : {}",board.getNum());
+            log.debug("Received Board Title : {}",board.getTitle());
+            log.debug("Received Board Contents : {}",board.getContents());
+            log.debug("Received Board Modify Name : {}",board.getModifyName());
+
+            this.boardService.updateBoard(board.getNum(), boardMono);
+        })).subscribe();
 
         Flux<Board> boardFlux = this.boardService.getAllBoards();
 
