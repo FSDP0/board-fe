@@ -95,8 +95,6 @@ public class BoardViewController {
 
     @GetMapping("/delete")
     public Mono<String> delete(@RequestParam Long num,PagerInfo pagerInfo,Model model){
-        log.warn(num+"");
-
         this.boardService.deleteBoard(num).subscribe();
 
         Flux<Board> boardFlux = this.boardService.getAllBoards();
@@ -106,11 +104,5 @@ public class BoardViewController {
 
         // Redirect url
         return Mono.just("redirect:/boards/list");
-    }
-
-    @GetMapping("/home")
-    public String test(PagerInfo pagerInfo,Model model){
-        
-        return "board/layout/basic";
     }
 }
