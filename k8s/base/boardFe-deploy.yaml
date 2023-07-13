@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: board-fe
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: board-fe-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: board-fe
+  template:
+    spec:
+      containers:
+      - name: board-fe
+        image: fsdp/board-fe:1.0.0
+        ports:
+        - name: view
+          containerPort: 9000
+        resources:
+          requests:
+            cpu: 500m
+            memory: 500M
+          limits:
+            cpu: "1"
+            memory: 1Gi

@@ -1,0 +1,14 @@
+# Define FE Pod Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: board-fe-headless-svc
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: http
+    port: 9000
+    targetPort: view
+    protocol: TCP

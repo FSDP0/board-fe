@@ -1,0 +1,59 @@
+apiVersion: skaffold/v4beta5
+kind: Config
+metadata:
+  name: demo-fe
+profiles:
+- name: default
+  build:
+    tagPolicy:
+      envTemplate:
+        template: "{{.RELEASE}}"
+    local:
+      push: true
+    artifacts:
+    - image: docker.io/fsdp/board-fe
+      jib:
+        type: maven
+        args:
+          - -Djib.container.environment=SPRING_PROFILES_ACTIVE=prod
+        fromImage: eclipse-temurin:17-jre-alpine
+  manifests:
+    kustomize:
+      paths:
+      - k8s/overlays/np
+    # rawYaml:
+    # - k8s/default/*.yaml
+- name: ingress-kind
+  build:
+    tagPolicy:
+      envTemplate:
+        template: "{{.RELEASE}}"
+    local:
+      push: true
+    artifacts:
+    - image: docker.io/fsdp/board-fe
+      jib:
+        type: maven
+        args:
+        - -Djib.container.environment=SPRING_PROFILES_ACTIVE=prod
+  manifests:
+    kustomize:
+      paths:
+      - k8s/overlays/ingress/kind
+- name: ingress-k3d
+  build:
+    tagPolicy:
+      envTemplate:
+        template: "{{.RELEASE}}"
+    local:
+      push: true
+    artifacts:
+      - image: docker.io/fsdp/board-fe
+        jib:
+          type: maven
+          args:
+            - -Djib.container.environment=SPRING_PROFILES_ACTIVE=prod
+  manifests:
+    kustomize:
+      paths:
+      - k8s/overlays/ingress/k3d

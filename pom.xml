@@ -87,6 +87,18 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!-- jib Plugin for skaffold automation build -->
+			<!-- [to]   Image Name & Tag : docker hub repository-->
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.3.2</version>
+				<configuration>
+					<to>
+						<image>docker.io/fsdp/board-fe</image>
+					</to>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

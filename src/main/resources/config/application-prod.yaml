@@ -1,0 +1,11 @@
+logging:
+    level:
+        org:
+            springframework: WARN
+
+server:
+    port: 9000
+
+api:
+    # K8s cluster domain : http://<Service Name>.<Namespace>.svc.cluster.local:<Port Num.>/<Context-Paths>
+    url: http://board-api-headless-svc.board-api.svc.cluster.local:8000/boards

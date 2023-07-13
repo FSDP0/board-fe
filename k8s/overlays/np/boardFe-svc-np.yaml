@@ -1,0 +1,17 @@
+# Define FE Pod Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: board-fe-np-svc
+  # namespace: board-fe
+spec:
+  selector:
+    app: board-fe
+  type: NodePort
+  ports:
+  - name: http
+    port: 9000
+    targetPort: view
+    nodePort: 30090
+    protocol: TCP

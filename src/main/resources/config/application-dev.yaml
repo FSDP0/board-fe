@@ -1,0 +1,11 @@
+logging:
+    level:
+        org:
+            springframework: DEBUG
+
+server:
+    port: 9000
+
+api:
+    # Container Environment : http://<Target Container Name>:<Port Num.>/<Context-Paths>
+    url: http://board-api:8000/boards

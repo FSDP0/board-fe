@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: board-fe-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /       # Description : Target URI where the traffic must be redirected
+spec:
+  ingressClassName: nginx                               # What kind of Ingress Controller Class
+  rules:
+  - host: board.app.com                                 # Set hostname configuration file first.
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: board-fe-headless-svc                 # Target Service Name
+            port:
+              number: 9000                              # Service Port Num.
