@@ -2,8 +2,7 @@
 logging:
     level:
         org:
-            springframework: DEBUG
-
+            springframework: INFO
 server:
     port: 9000
 
